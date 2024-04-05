@@ -46,18 +46,19 @@ include $(TOCK_USERLAND_BASE_DIR)/Program.mk
 # Rules to incorporate external libraries
 define EXTERN_LIB_RULES
 
-# If there is a Makefile.setup, then we try to automatically build the library.
+# If there is a Makefile.setup, we use that to do inital library setup.
 ifneq "$$(wildcard $(1)/Makefile.setup)" ""
   # Do any setup steps needed to fetch the library.
   DEVNULL := $$(shell make -C $(1) -f Makefile.setup all)
-  # Build the library if needed.
-  DEVNULL := $$(shell make -C $(1) all)
 endif
 
 EXTERN_LIB_NAME_$(notdir $(1)) := $(notdir $(1))
 
 # If this library has any additional rules, add them
 -include $(1)/Makefile.app
+
+# Include the library makefile so it can be build (if needed).
+include $(1)/Makefile
 
 # If this library has an include directory, add it to search path
 ifneq "$$(wildcard $(1)/include)" ""
