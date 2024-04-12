@@ -29,8 +29,7 @@ static void recv_callback(returncode_t ret, int len) {
 
 returncode_t libtock_udp_send_sync(void *buf, size_t len,
                     sock_addr_t *dst_addr) {
-            returncode_t ret;
-  returncode_t ret; 
+  returncode_t ret;
   send_sync_result.fired = false;
 
   ret = libtock_udp_send(buf, len, dst_addr, send_callback);
