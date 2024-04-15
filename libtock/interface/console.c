@@ -4,10 +4,10 @@
 
 #include "console.h"
 
-static void generic_upcall(int length,
-                          int   _y __attribute__ ((unused)),
-                          int   _z __attribute__ ((unused)),
-			  void* ud) {
+static void generic_upcall(int   length,
+                           int   _y __attribute__ ((unused)),
+                           int   _z __attribute__ ((unused)),
+                           void* ud) {
   libtock_console_callback_write cb = (libtock_console_callback_write)ud;
   cb(RETURNCODE_SUCCESS, length);
 }
