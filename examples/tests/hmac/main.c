@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <string.h>
 
-#include <console.h>
 #include <libtock-sync/crypto/hmac.h>
+#include <libtock/interface/console.h>
 
 #define KEY_LEN  32
 #define DATA_LEN 256
@@ -24,7 +25,7 @@ int main(void) {
 
   ret = libtocksync_hmac_simple(LIBTOCK_HMAC_SHA256,
     key_buf, 11,
-    data_buf, strlen(data_buf),
+    data_buf, strlen((const char*) data_buf),
     dest_buf, DEST_LEN);
   if (ret != RETURNCODE_SUCCESS) {
     printf("Unable to compute HMAC.\n");
