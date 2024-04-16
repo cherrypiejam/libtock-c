@@ -10,10 +10,10 @@ extern "C" {
 
 // Function signature for touch data callback.
 //
-// - `arg1` (`returncode_t`): Status from touch device.
+// - `arg1` (`int`): Status from touch device.
 // - `arg2` (`uint16_t`): X coordinate of the touch event.
 // - `arg3` (`uint16_t`): Y coordinate of the touch event.
-typedef void (*libtock_touch_touch_callback)(returncode_t, uint16_t, uint16_t);
+typedef void (*libtock_touch_touch_callback)(int, uint16_t, uint16_t);
 
 // Function signature for multi touch data callback.
 //
@@ -30,10 +30,10 @@ typedef void (*libtock_touch_multi_touch_callback)(returncode_t, int, int, int);
 typedef void (*libtock_touch_gesture_callback)(returncode_t, int);
 
 
-#define TOUCH_STATUS_RELEASED 0
-#define TOUCH_STATUS_PRESSED 1
-#define TOUCH_STATUS_MOVED 2
-#define TOUCH_STATUS_UNSTARTED 3
+#define LIBTOCK_TOUCH_STATUS_RELEASED 0
+#define LIBTOCK_TOUCH_STATUS_PRESSED 1
+#define LIBTOCK_TOUCH_STATUS_MOVED 2
+#define LIBTOCK_TOUCH_STATUS_UNSTARTED 3
 
 #define GESTURE_NO 0
 #define GESTURE_SWIPE_UP 1
@@ -77,7 +77,7 @@ returncode_t libtock_touch_allocate_multi_touch_buffer(int max_touches, libtock_
 returncode_t libtock_touch_get_gestures(libtock_touch_gesture_callback cb);
 
 // Every multi touch event needs to be acked
-returncode_t multi_touch_next(void);
+returncode_t libtock_touch_multi_touch_next(void);
 
 returncode_t libtock_touch_read_touch_from_buffer(libtock_touch_event_t* buffer, int index,
   uint8_t *id, uint8_t *status, uint8_t *x, uint8_t *y,

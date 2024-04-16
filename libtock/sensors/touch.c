@@ -97,7 +97,7 @@ returncode_t libtock_touch_get_gestures(libtock_touch_gesture_callback cb) {
   return libtock_touch_set_upcall_gesture(gesture_upcall, cb);
 }
 
-returncode_t multi_touch_next(void) {
+returncode_t libtock_touch_multi_touch_next(void) {
   return libtock_touch_command_multi_touch_next();
 }
 
