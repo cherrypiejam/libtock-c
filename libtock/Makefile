@@ -8,7 +8,23 @@ $(LIBNAME)_DIR := $(TOCK_USERLAND_BASE_DIR)/$(LIBNAME)
 $(LIBNAME)_SRC_ROOT := $($(LIBNAME)_DIR)
 
 # List all C and Assembly files
-$(LIBNAME)_SRCS  := $(wildcard $($(LIBNAME)_SRC_ROOT)/internal/*.c) $(wildcard $($(LIBNAME)_SRC_ROOT)/*.c) $(wildcard $($(LIBNAME)_SRC_ROOT)/*.s)
+$(LIBNAME)_SRCS  := $(wildcard $($(LIBNAME)_SRC_ROOT)/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/crypto/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/crypto/syscalls/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/display/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/display/syscalls/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/interface/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/interface/syscalls/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/kernel/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/kernel/syscalls/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/net/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/net/syscalls/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/peripherals/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/peripherals/syscalls/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/sensors/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/sensors/syscalls/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/storage/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_SRC_ROOT)/storage/syscalls/*.c)
 
 # Include the libtock folder for includes to find header files. This is
 # temporary until the libtock-c rewrite is merged.
