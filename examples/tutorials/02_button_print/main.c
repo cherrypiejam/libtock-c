@@ -6,9 +6,9 @@
 //   btn_num: The index of the button associated with the callback
 //   val: true if pressed, false if depressed
 static void button_callback(
-  __attribute__ ((unused)) returncode_t   ret,
-  __attribute__ ((unused)) int   btn_num,
-                            bool                            val) {
+  __attribute__ ((unused)) returncode_t ret,
+  __attribute__ ((unused)) int          btn_num,
+  bool                                  val) {
   // Only print on the down press.
   if (val) {
     printf("Hello!\n");

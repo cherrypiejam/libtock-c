@@ -1,5 +1,5 @@
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <libtock-sync/display/text_screen.h>
 #include <timer.h>

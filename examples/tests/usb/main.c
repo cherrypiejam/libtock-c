@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include <timer.h>
 #include <libtock-sync/peripherals/usb.h>
+#include <timer.h>
 
 int main(void) {
   returncode_t ret;

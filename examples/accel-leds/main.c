@@ -1,8 +1,8 @@
 #include <limits.h>
 #include <stdio.h>
 
-#include <libtock/interface/led.h>
 #include <libtock-sync/sensors/ninedof.h>
+#include <libtock/interface/led.h>
 
 int main(void) {
   printf("[App] Accelerometer -> LEDs\n");

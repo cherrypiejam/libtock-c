@@ -16,8 +16,8 @@
 #include <unistd.h>
 
 #include <libtock/interface/console.h>
-#include <libtock/peripherals/gpio.h>
 #include <libtock/interface/led.h>
+#include <libtock/peripherals/gpio.h>
 #include <libtock/timer.h>
 #include <libtock/tock.h>
 
@@ -79,7 +79,7 @@ static void gpio_input(void) {
 // **************************************************
 static bool gpio_interrupt_fired = false;
 static void gpio_cb (__attribute__ ((unused)) uint32_t pin_num,
-                     __attribute__ ((unused)) bool arg2) {
+                     __attribute__ ((unused)) bool     arg2) {
   gpio_interrupt_fired = true;
 }
 
