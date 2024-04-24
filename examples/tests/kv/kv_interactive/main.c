@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <libtock/interface/console.h>
+#include <libtock-sync/interface/console.h>
 #include <libtock-sync/storage/kv.h>
+#include <libtock/interface/console.h>
 
 #define KEY_LEN  64
 #define DATA_LEN 64
@@ -13,6 +14,13 @@ uint8_t data_buf[DATA_LEN];
 uint8_t value_buf[DATA_LEN];
 
 char read_buf[DATA_LEN];
+
+static int getch(void) {
+  uint8_t buffer[1];
+  int number_read;
+  libtocksync_console_read(buffer, 1, &number_read);
+  return buffer[0];
+}
 
 static int get_command(void) {
   int idx = 0;
