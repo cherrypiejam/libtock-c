@@ -9,7 +9,7 @@
 
 uint8_t key_buf[KEY_LEN]   = "First Key";
 uint8_t data_buf[DATA_LEN] = "My secret key, that no one knows";
-uint8_t out_buf[DATA_LEN] = "Just junk";
+uint8_t out_buf[DATA_LEN]  = "Just junk";
 
 static void kv_cb(int                          result,
                   __attribute__ ((unused)) int length,
