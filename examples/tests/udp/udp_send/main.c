@@ -12,6 +12,9 @@
 #include <libtock/sensors/temperature.h>
 #include <libtock/timer.h>
 
+#include <libtock-sync/net/udp.h>
+#include <libtock/net/udp.h>
+
 #define DEBUG 1
 
 static unsigned char BUF_BIND_CFG[2 * sizeof(sock_addr_t)];
@@ -26,7 +29,7 @@ int main(void) {
   static char packet[70];
 
   ipv6_addr_t ifaces[10];
-  udp_list_ifaces(ifaces, 10);
+  libtock_udp_list_ifaces(ifaces, 10);
 
   sock_handle_t handle;
   sock_addr_t addr = {
@@ -37,7 +40,7 @@ int main(void) {
   printf("Opening socket on ");
   print_ipv6(&ifaces[0]);
   printf(" : %d\n", addr.port);
-  int bind_return = udp_bind(&handle, &addr, BUF_BIND_CFG);
+  int bind_return = libtock_udp_bind(&handle, &addr, BUF_BIND_CFG);
 
   if (bind_return < 0) {
     printf("Bind failed. Error code: %d\n", bind_return);
@@ -66,7 +69,7 @@ int main(void) {
       print_ipv6(&(destination.addr));
       printf(" : %d\n", destination.port);
     }
-    ssize_t result = udp_send_to(packet, len, &destination);
+    returncode_t result = libtock_udp_send_sync(packet, len, &destination);
 
     switch (result) {
       case RETURNCODE_SUCCESS:
