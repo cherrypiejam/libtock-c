@@ -3,10 +3,9 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <console.h>
 #include <libtock-sync/storage/sdcard.h>
-#include <timer.h>
-#include <tock.h>
+#include <libtock/timer.h>
+#include <libtock/tock.h>
 
 uint8_t read_buf[512]  = {0};
 uint8_t write_buf[512] = {0};
