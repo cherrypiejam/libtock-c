@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-returncode_t get_eui64(uint64_t* eui64);
+returncode_t libtock_eui64_get(uint64_t* eui64);
 
 #ifdef __cplusplus
 }
