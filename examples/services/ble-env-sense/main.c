@@ -13,9 +13,9 @@
 #include <simple_adv.h>
 #include <simple_ble.h>
 
-#include <kernel/ipc.h>
-#include <net/nrf51_serialization.h>
-#include <tock.h>
+#include <libtock/kernel/ipc.h>
+#include <libtock/net/nrf51_serialization.h>
+#include <libtock/tock.h>
 
 #include "env_sense_service.h"
 
