@@ -33,15 +33,6 @@ uint32_t libtock_read_only_state_get_pending_tasks(void* base);
 // to get the current time returned from the kernel.
 uint64_t libtock_read_only_state_get_ticks(void* base);
 
-// Use ROS to check if there are any pending tasks. If there are we yield, if
-// not then we return immediately without any syscalls.
-//
-// `pending_tasks` is set to the number of pending tasks before yield was
-// called. If there are no pending tasks, `pending_tasks` is set to 0.
-//
-// Returns `RETURNCODE_SUCCESS` on success, and error otherwise.
-returncode_t libtock_read_only_state_quick_yield(void* base, int* pending_tasks);
-
 #ifdef __cplusplus
 }
 #endif
