@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <libtock-sync/services/unit_test.h>
 #include <libtock-sync/storage/kv.h>
-#include <unit_test.h>
 
 #define KEY_LEN  200
 #define DATA_LEN 3000
