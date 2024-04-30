@@ -1,11 +1,10 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "gpio.h"
-#include "ieee802154.h"
-#include "led.h"
-#include "timer.h"
-#include "tock.h"
+#include <libtock/interface/led.h>
+#include <libtock/net/ieee802154.h>
+#include <libtock/peripherals/gpio.h>
+#include <libtock/timer.h>
 
 // IEEE 802.15.4 sample packet transmission app.
 // Continually transmits frames at the specified short address to the specified
@@ -18,13 +17,13 @@ char packet[BUF_SIZE] = {2, 0, 1};
 bool toggle = true;
 
 int main(void) {
-  gpio_enable_output(0);
+  libtock_gpio_enable_output(0);
   ieee802154_set_address(0x1540);
   ieee802154_set_pan(0xABCD);
   ieee802154_config_commit();
   ieee802154_up();
   while (1) {
-    led_toggle(0);
+    libtock_led_toggle(0);
     int err = ieee802154_send_raw(
                           packet,
                           BUF_SIZE);
@@ -32,10 +31,10 @@ int main(void) {
       printf("Transmitted successfully.\n");
     } else if (err == RETURNCODE_ENOACK) {
       printf("Transmitted but packet not acknowledged.\n");
-      gpio_toggle(0);
+      libtock_gpio_toggle(0);
     } else {
       printf("Transmit failed with error %i.\n", err);
-      gpio_toggle(0);
+      libtock_gpio_toggle(0);
     }
     delay_ms(3000);
   }

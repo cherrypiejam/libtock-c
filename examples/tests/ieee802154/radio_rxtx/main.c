@@ -1,9 +1,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "ieee802154.h"
-#include "led.h"
-#include "timer.h"
+#include <libtock/interface/led.h>
+#include <libtock/net/ieee802154.h>
+#include <libtock/timer.h>
 
 // IEEE 802.15.4 sample packet echo app.
 // Continually receives packets at the specified short address, then retransmits them.
@@ -48,7 +48,7 @@ int main(void) {
                         payload_length);
         packet_rx = ieee802154_read_next_frame(&rx_ring_buf);
       }
-      led_toggle(0);
+      libtock_led_toggle(0);
     }
   }
 }

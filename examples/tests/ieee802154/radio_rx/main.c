@@ -2,10 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "ieee802154.h"
-#include "led.h"
-#include "timer.h"
-#include "tock.h"
+#include <libtock/interface/led.h>
+#include <libtock/net/ieee802154.h>
+#include <libtock/timer.h>
 
 // IEEE 802.15.4 sample packet reception app.
 // Continually receives frames at the specified short address. Setting the
@@ -22,7 +21,7 @@ static void callback(__attribute__ ((unused)) int   pans,
                      __attribute__ ((unused)) int   dst_addr,
                      __attribute__ ((unused)) int   src_addr,
                      __attribute__ ((unused)) void* ud) {
-  led_toggle(0);
+  libtock_led_toggle(0);
   // Before accessing an "allowed" buffer, we must request it back.
   // We do this with the reset_ring_buf function. Because this example
   // only uses one ring buffer, we pass null values to unallow the ringbuffer.

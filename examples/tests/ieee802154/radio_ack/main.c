@@ -1,9 +1,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "ieee802154.h"
-#include "led.h"
-#include "timer.h"
+#include <libtock/interface/led.h>
+#include <libtock/net/ieee802154.h>
+#include <libtock/timer.h>
 
 // IEEE 802.15.4 sample packet transmission/ack app.
 // Continually transmits frames at the specified short address to the specified
@@ -31,7 +31,7 @@ int main(void) {
                               packet_tx,
                               BUF_SIZE);
     if (err == RETURNCODE_SUCCESS) {
-      led_toggle(0);
+      libtock_led_toggle(0);
       printf("Packet sent and acked.\n");
     } else if (err == RETURNCODE_ENOACK) {
       printf("Packet sent, but not acked.\n");
