@@ -2,10 +2,9 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include <button.h>
-#include <timer.h>
-
-#include <udp.h>
+#include <libtock/interface/button.h>
+#include <libtock/net/udp.h>
+#include <libtock/timer.h>
 
 #define DEBUG 0
 

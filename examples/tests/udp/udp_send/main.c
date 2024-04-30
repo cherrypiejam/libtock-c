@@ -2,14 +2,15 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include <ambient_light.h>
-#include <button.h>
-#include <humidity.h>
-#include <rng.h>
-#include <temperature.h>
-#include <timer.h>
-
-#include <udp.h>
+#include <libtock/interface/button.h>
+#include <libtock/interface/led.h>
+#include <libtock/net/ieee802154.h>
+#include <libtock/net/udp.h>
+#include <libtock/peripherals/rng.h>
+#include <libtock/sensors/ambient_light.h>
+#include <libtock/sensors/humidity.h>
+#include <libtock/sensors/temperature.h>
+#include <libtock/timer.h>
 
 #define DEBUG 1
 

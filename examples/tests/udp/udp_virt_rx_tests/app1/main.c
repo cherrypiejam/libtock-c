@@ -2,11 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "led.h"
-#include "timer.h"
-#include "tock.h"
-
-#include <udp.h>
+#include <libtock/interface/led.h>
+#include <libtock/net/udp.h>
+#include <libtock/timer.h>
 
 /*
  * UDP sample packet reception app.
@@ -30,9 +28,9 @@ void print_ipv6(ipv6_addr_t *ipv6_addr) {
   printf("%02x%02x", ipv6_addr->addr[14], ipv6_addr->addr[15]);
 }
 
-static void callback(int payload_len,
-                     __attribute__ ((unused)) int arg2,
-                     __attribute__ ((unused)) int arg3,
+static void callback(int                            payload_len,
+                     __attribute__ ((unused)) int   arg2,
+                     __attribute__ ((unused)) int   arg3,
                      __attribute__ ((unused)) void* ud) {
   led_toggle(0);
 
@@ -87,7 +85,6 @@ int main(void) {
       printf("Failed to bind to socket %d\n", result);
       break;
   }
-
   /* This app tests receiving for 10 seconds
    * then closing the connection, so we include a delay for that
    * reason. */

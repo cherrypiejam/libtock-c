@@ -2,12 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "led.h"
-#include "timer.h"
-#include "tock.h"
-
-#include <ieee802154.h>
-#include <udp.h>
+#include <libtock/interface/led.h>
+#include <libtock/net/ieee802154.h>
+#include <libtock/net/udp.h>
+#include <libtock/timer.h>
 
 /*
  * UDP sample packet reception app.
