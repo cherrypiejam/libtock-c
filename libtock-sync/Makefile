@@ -12,9 +12,11 @@ $(LIBNAME)_SRCS  := $(wildcard $($(LIBNAME)_DIR)/*.c)
 $(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_DIR)/crypto/*.c)
 $(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_DIR)/display/*.c)
 $(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_DIR)/interface/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_DIR)/kernel/*.c)
 $(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_DIR)/net/*.c)
 $(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_DIR)/peripherals/*.c)
 $(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_DIR)/sensors/*.c)
+$(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_DIR)/services/*.c)
 $(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_DIR)/storage/*.c)
 
 # Need libtock headers.
