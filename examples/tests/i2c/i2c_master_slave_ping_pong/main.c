@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <button.h>
-#include <i2c_master_slave.h>
-#include <timer.h>
+#include <libtock/interface/button.h>
+#include <libtock/peripherals/i2c_master.h>
+#include <libtock/timer.h>libtock_
 
 #define BUF_SIZE 16
 #define LEADER_ADDRESS 0x40
@@ -29,10 +29,10 @@ static void i2c_callback(int                            callback_type,
   static bool any_message = false;
   if (!any_message) {
     int nbuttons;
-    button_count(&nbuttons);
+    libtock_button_count(&nbuttons);
     int j;
     for (j = 0; j < nbuttons; j++) {
-      button_disable_interrupt(j);
+      libtock_button_disable_interrupt(j);
     }
   }
 
@@ -91,9 +91,6 @@ int main(void) {
   TOCK_EXPECT(RETURNCODE_SUCCESS, i2c_master_slave_set_slave_address(FOLLOW_ADDRESS));
   TOCK_EXPECT(RETURNCODE_SUCCESS, i2c_master_slave_listen());
 
-  // Set up button peripheral to grab any button press
-  TOCK_EXPECT(RETURNCODE_SUCCESS, button_subscribe(button_cb, NULL));
-
   int nbuttons;
   button_count(&nbuttons);
   if (nbuttons < 1) {
@@ -103,7 +100,7 @@ int main(void) {
 
   int j;
   for (j = 0; j < nbuttons; j++) {
-    TOCK_EXPECT(RETURNCODE_SUCCESS, button_enable_interrupt(j));
+    TOCK_EXPECT(RETURNCODE_SUCCESS, libtock_button_notify_on_press(j, button_cb));
   }
 
   while (1) {
