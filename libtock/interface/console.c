@@ -4,12 +4,12 @@
 
 #include "console.h"
 
-static void generic_upcall(int   length,
-                           int   _y __attribute__ ((unused)),
+static void generic_upcall(int   ret,
+                           int   length,
                            int   _z __attribute__ ((unused)),
                            void* ud) {
   libtock_console_callback_write cb = (libtock_console_callback_write)ud;
-  cb(RETURNCODE_SUCCESS, length);
+  cb(ret, length);
 }
 
 returncode_t libtock_console_write(const uint8_t* buffer, uint32_t len, libtock_console_callback_write cb) {
@@ -34,7 +34,7 @@ returncode_t libtock_console_read(uint8_t* buffer, uint32_t len, libtock_console
   err = libtock_console_set_readwrite_allow(buffer, len);
   if (err != RETURNCODE_SUCCESS) return err;
 
-  err = libtock_console_command_write(len);
+  err = libtock_console_command_read(len);
   return err;
 }
 

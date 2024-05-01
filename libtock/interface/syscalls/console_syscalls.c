@@ -6,7 +6,7 @@ returncode_t libtock_console_write_done_set_upcall(subscribe_upcall callback, vo
 }
 
 returncode_t libtock_console_read_done_set_upcall(subscribe_upcall callback, void* opaque) {
-  subscribe_return_t sval = subscribe(DRIVER_NUM_CONSOLE, 1, callback, opaque);
+  subscribe_return_t sval = subscribe(DRIVER_NUM_CONSOLE, 2, callback, opaque);
   return tock_subscribe_return_to_returncode(sval);
 }
 
