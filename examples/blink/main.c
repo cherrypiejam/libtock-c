@@ -1,5 +1,5 @@
 #include <libtock/interface/led.h>
-#include <timer.h>
+#include <libtock/timer.h>
 
 int main(void) {
   // Ask the kernel how many LEDs are on this board.
