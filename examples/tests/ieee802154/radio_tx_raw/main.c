@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include <libtock-sync/net/ieee802154.h>
 #include <libtock/interface/led.h>
 #include <libtock/net/ieee802154.h>
 #include <libtock/peripherals/gpio.h>
@@ -13,18 +14,18 @@
 #define BUF_SIZE 3
 
 // Generic ACK packet for demonstration purposes
-char packet[BUF_SIZE] = {2, 0, 1};
+uint8_t packet[BUF_SIZE] = {2, 0, 1};
 bool toggle = true;
 
 int main(void) {
   libtock_gpio_enable_output(0);
-  ieee802154_set_address(0x1540);
-  ieee802154_set_pan(0xABCD);
-  ieee802154_config_commit();
-  ieee802154_up();
+  libtock_ieee802154_set_address_short(0x1540);
+  libtock_ieee802154_set_pan(0xABCD);
+  libtock_ieee802154_config_commit();
+  libtocksync_ieee802154_up();
   while (1) {
     libtock_led_toggle(0);
-    int err = ieee802154_send_raw(
+    int err = libtocksync_ieee802154_send_raw(
                           packet,
                           BUF_SIZE);
     if (err == RETURNCODE_SUCCESS) {
