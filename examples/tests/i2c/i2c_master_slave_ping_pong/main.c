@@ -55,9 +55,9 @@ static void i2c_callback(int                            callback_type,
 // exchange. First, change the address to the BUTTON_ADDRESS to avoid
 // conflict with the other node, then send a message.
 static void button_cb(
-  __attribute__((unused)) returncode_t    ret,
-  __attribute__((unused)) int    btn_num,
-                      __attribute__ ((unused)) bool   val) {
+  __attribute__((unused)) returncode_t ret,
+  __attribute__((unused)) int          btn_num,
+  __attribute__ ((unused)) bool        val) {
   // Only the first press is meaningfull
   static bool pressed = false;
 
