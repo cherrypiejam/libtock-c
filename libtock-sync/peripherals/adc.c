@@ -1,8 +1,4 @@
-#include <stdint.h>
-#include <stdio.h>
-
 #include "adc.h"
-#include "tock.h"
 
 // used for creating synchronous versions of functions
 //
