@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tock.h"
+#include "../tock.h"
 #include "syscalls/usb_keyboard_hid_syscalls.h"
 
 #ifdef __cplusplus
