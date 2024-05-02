@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tock.h"
+#include "../tock.h"
 #include "syscalls/nrf51_serialization_syscalls.h"
 
 #ifdef __cplusplus
