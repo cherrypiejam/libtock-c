@@ -34,7 +34,7 @@
 //     if (ret != 0) prinrf("ERROR(%i): Could not write back to flash.\n", ret);
 //   }
 
-#include "tock.h"
+#include "../tock.h"
 #include "syscalls/app_state_syscalls.h"
 
 #ifdef __cplusplus
