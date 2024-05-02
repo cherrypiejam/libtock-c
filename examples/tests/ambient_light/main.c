@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 #include <libtock-sync/sensors/ambient_light.h>
-#include <timer.h>
-#include <tock.h>
+#include <libtock/timer.h>
+#include <libtock/tock.h>
 
 int main (void) {
   printf("[Ambient Light] Test\n");
