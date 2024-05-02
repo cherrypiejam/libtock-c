@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 #include <libtock/peripherals/dac.h>
-#include <timer.h>
-#include <tock.h>
+#include <libtock/timer.h>
+#include <libtock/tock.h>
 
 uint16_t sine_samples[100] = {
   512, 544, 576, 607, 639, 670, 700, 729, 758, 786,
