@@ -3,8 +3,8 @@
 
 #include <gap.h>
 
-#include <net/ble.h>
-#include <tock.h>
+#include <libtock/net/ble.h>
+#include <libtock/tock.h>
 
 // Sizes in bytes
 #define DEVICE_NAME_SIZE 6
