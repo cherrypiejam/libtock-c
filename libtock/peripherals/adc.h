@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-#include "tock.h"
+#include "../tock.h"
 #include "syscalls/adc_syscalls.h"
 
 #ifdef __cplusplus
