@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tock.h"
+#include "../tock.h"
 #include "syscalls/lora_phy_syscalls.h"
 #include "../peripherals/gpio.h"
 
