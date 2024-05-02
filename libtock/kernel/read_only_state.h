@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tock.h"
+#include "../tock.h"
 #include "syscalls/read_only_state_syscalls.h"
 
 #ifdef __cplusplus
