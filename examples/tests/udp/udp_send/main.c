@@ -69,7 +69,7 @@ int main(void) {
       print_ipv6(&(destination.addr));
       printf(" : %d\n", destination.port);
     }
-    returncode_t result = libtock_udp_send_sync(packet, len, &destination);
+    returncode_t result = libtocksync_udp_send(packet, len, &destination);
 
     switch (result) {
       case RETURNCODE_SUCCESS:

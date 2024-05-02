@@ -82,7 +82,7 @@ int main(void) {
     libtock_ieee802154_set_address_short(49138); // Corresponds to the dst mac addr set in kernel
     libtock_ieee802154_set_pan(0xABCD);
     libtock_ieee802154_config_commit();
-    libtock_sync_ieee802154_up();
+    libtocksync_ieee802154_up();
   } else {
     printf("No 15.4 driver present, set mac address manually in kernel.\n");
   }
