@@ -1,5 +1,6 @@
-#include "timer.h"
-#include <ieee802154.h>
+#include <libtock/timer.h>
+
+#include "ieee802154.h"
 
 struct ieee802154_receive_data {
   bool fired;
