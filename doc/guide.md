@@ -47,7 +47,7 @@ is used in a C++ app.
 ```c
 #pragma once
 
-#include "tock.h"
+#include "../../tock.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -201,7 +201,7 @@ The `[name].h` header file must look like:
 ```c
 #pragma once
 
-#include "tock.h"
+#include "../tock.h"
 #include "syscalls/[name]_syscalls.h"
 
 #ifdef __cplusplus
