@@ -4,8 +4,8 @@
 
 #include <libtock-sync/sensors/proximity.h>
 #include <libtock/interface/led.h>
-#include <timer.h>
-#include <tock.h>
+#include <libtock/timer.h>
+#include <libtock/tock.h>
 
 int main(void) {
   returncode_t ret;
