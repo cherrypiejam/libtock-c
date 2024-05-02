@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <kernel/ipc.h>
-#include <timer.h>
+#include <libtock/kernel/ipc.h>
+#include <libtock/timer.h>
 
 size_t rot13_svc_num = 0;
 
