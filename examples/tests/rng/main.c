@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include <libtock-sync/peripherals/rng.h>
-#include <timer.h>
+#include <libtock/timer.h>
 
 uint8_t randbuf[256];
 
