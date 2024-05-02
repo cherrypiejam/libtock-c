@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tock.h"
+#include "../tock.h"
 #include "syscalls/spi_controller_syscalls.h"
 
 #ifdef __cplusplus
