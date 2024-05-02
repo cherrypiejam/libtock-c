@@ -1,23 +1,23 @@
 #pragma once
 
-#include "tock.h"
+#include "../tock.h"
 #include "syscalls/ieee802154_syscalls.h"
 
 /* IEEE 802.15.4 system call interface */
-// The libtock-c IEEE 802.15.4 driver consists of a set of system calls 
+// The libtock-c IEEE 802.15.4 driver consists of a set of system calls
 // and data types to interface with the kernel. To receive, the user process
 // must provide a ring buffer to the kernel of the type `libtock_ieee802154_rxbuf`.
 // Upon receiving a frame, the kernel will write the frame into the ring buffer
-// and schedule an upcall that is to be be handled by the userprocess. Before 
-// reading the frame, the userprocess must call `reset_ring_buffer` to 
+// and schedule an upcall that is to be be handled by the userprocess. Before
+// reading the frame, the userprocess must call `reset_ring_buffer` to
 // unallow the ring buffer and unsubscribe upcalls (so as to clear pending upcalls).
 // The userprocess can then read the frame from the ring buffer and process it.
 // Given the non-deterministic nature of upcalls, the userprocess must carefully
 // handle receiving upcalls. There exists a risk of dropping 15.4 packets while
 // reading from the ring buffer (as the ring buffer is unallowed while reading).
-// This can be handled by utilizing two ring buffers and alternating which 
-// belongs to the kernel and which is being read from. An example of this can be 
-// found in libtock-c/ot-tock/platform/platform-tock/system.c. Alternatively, 
+// This can be handled by utilizing two ring buffers and alternating which
+// belongs to the kernel and which is being read from. An example of this can be
+// found in libtock-c/ot-tock/platform/platform-tock/system.c. Alternatively,
 // the user can also utilize a single ring buffer if dropped frames may be permissible
 // (see libtock-c/examples/tests/ieee802154/radio_rx/main.c for an example of this).
 
@@ -248,7 +248,7 @@ returncode_t libtock_ieee802154_send(uint32_t addr,
 
 // Sends an IEEE 802.15.4 frame asynchronously. This is an alternative and contemporary
 // to the `libtock_ieee802154_send` function. This provides an interface for userprocesses to
-// form a frame (including headers, security, CRC etc) entirely in the userprocess. 
+// form a frame (including headers, security, CRC etc) entirely in the userprocess.
 // `libtock_ieee802154_send_raw` then takes this formed frame buffer and passes the frame
 // to the 15.4 capsule which sends the buffer (without altering the frame).
 // `payload` (in): Buffer containing the desired frame payload.
@@ -267,7 +267,7 @@ returncode_t libtock_ieee802154_send_raw(const uint8_t *     payload,
 #define libtock_ieee802154_FRAME_META_LEN 3
 #define libtock_ieee802154_FRAME_LEN (libtock_ieee802154_FRAME_META_LEN + 127)
 
-// Size of the ring buffer expected by the kernel. The ring buffer is of the following 
+// Size of the ring buffer expected by the kernel. The ring buffer is of the following
 // form: | read index | write index | frame 1 | frame 2 | ... | frame n |.
 // Dependent on the application, the number of frames contained in the ring buffer
 // can be increased or decreased by changing the value of libtock_ieee802154_MAX_RING_BUF_FRAMES.
@@ -359,7 +359,7 @@ bool libtock_ieee802154_frame_get_src_pan(const uint8_t *frame,
 // received frame.
 uint8_t* libtock_ieee802154_read_next_frame(const libtock_ieee802154_rxbuf* frame);
 
-// Resets the ring buffer shared with the kernel to either be disabled or prepared for the next 
+// Resets the ring buffer shared with the kernel to either be disabled or prepared for the next
 // received packet. To disable the ring buffer, the user should pass a NULL value to the `frame`
 // and `callback` arguments. To prepare for the next received packets, the caller should pass the
 // relevant buffer/callback to the `frame` and  `callback` arguments. Note, this function clears
