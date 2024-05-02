@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tock.h"
+#include "../../tock.h"
 #include "../gpio.h"
 
 #ifdef __cplusplus

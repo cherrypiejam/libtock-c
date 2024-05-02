@@ -1,7 +1,7 @@
 #pragma once
 
 #include "gpio.h"
-#include "tock.h"
+#include "../tock.h"
 #include "syscalls/gpio_async_syscalls.h"
 
 #ifdef __cplusplus
