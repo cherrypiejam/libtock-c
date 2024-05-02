@@ -19,8 +19,4 @@ $(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_DIR)/sensors/*.c)
 $(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_DIR)/services/*.c)
 $(LIBNAME)_SRCS  += $(wildcard $($(LIBNAME)_DIR)/storage/*.c)
 
-# Need libtock headers.
-override CPPFLAGS += -I$(TOCK_USERLAND_BASE_DIR)/libtock
-override CPPFLAGS += -I$(TOCK_USERLAND_BASE_DIR)
-
 include $(TOCK_USERLAND_BASE_DIR)/TockLibrary.mk
