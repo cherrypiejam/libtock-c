@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tock.h"
+#include "../tock.h"
 #include "syscalls/proximity_syscalls.h"
 
 #ifdef _cplusplus
