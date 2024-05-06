@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <libtock/timer.h>
+#include <libtock-sync/services/alarm.h>
 #include <libtock/peripherals/gpio.h>
 #include <libtock/net/nrf51_serialization.h>
 
@@ -58,19 +58,21 @@ static bool _need_wakeup = false;
 static bool _queued_packets = false;
 // Timer to detect when we fail to get a response message after sending a
 // command.
-static tock_timer_t* _timeout_timer = NULL;
+static alarm_t* _timeout_timer = NULL;
 // yield() variable.
 static bool nrf_serialization_done = false;
+// Save timer object for repeating alarms.
+static app_timer_id_t _stored_timer_id;
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 
-void timeout_timer_cb (int a, int b, int c, void* ud);
+void timeout_timer_cb (uint32_t a, uint32_t b);
 void ble_serialization_callback (int callback_type, int rx_len, int c, void* other);
 
 uint32_t sd_app_evt_wait (void);
-void serialization_timer_cb (int a, int b, int c, void* timer_id);
+void serialization_timer_cb (uint32_t a, uint32_t b);
 
 uint32_t ser_app_hal_hw_init (void);
 void ser_app_hal_delay (uint32_t ms);
@@ -89,11 +91,9 @@ void critical_region_exit (void);
  * Callback from the UART layer in the kernel
  ******************************************************************************/
 
-void timeout_timer_cb (int a, int b, int c, void* ud) {
+void timeout_timer_cb (uint32_t a, uint32_t b) {
     UNUSED_PARAMETER(a);
     UNUSED_PARAMETER(b);
-    UNUSED_PARAMETER(c);
-    UNUSED_PARAMETER(ud);
 
     // Uh oh did not get a response to a command packet.
     // Send up an error.
@@ -149,7 +149,7 @@ void ble_serialization_callback (int callback_type, int rx_len, int c, void* oth
 
                         // Got a response, cancel any pending timer
                         if (_timeout_timer != NULL) {
-                            timer_cancel(_timeout_timer);
+                            libtock_alarm_cancel(_timeout_timer);
                             free(_timeout_timer);
                             _timeout_timer = NULL;
                         }
@@ -287,7 +287,7 @@ uint32_t ser_app_hal_hw_init (void) {
 }
 
 void ser_app_hal_delay (uint32_t ms)  {
-    delay_ms(ms);
+    libtocksync_alarm_delay_ms(ms);
 }
 
 void ser_app_hal_nrf_reset_pin_clear (void) {}
@@ -354,8 +354,8 @@ uint32_t ser_phy_tx_pkt_send (const uint8_t* p_buffer, uint16_t num_of_bytes) {
     if (tx_len == 0) {
         // We need to set a timer in case we never get the response packet.
         if (ser_sd_transport_is_busy()) {
-            _timeout_timer = (tock_timer_t*)malloc(sizeof(tock_timer_t));
-            timer_in(100, timeout_timer_cb, NULL, _timeout_timer);
+            _timeout_timer = (alarm_t*)malloc(sizeof(alarm_t));
+            libtock_alarm_in_ms(100, timeout_timer_cb, _timeout_timer);
         }
 
         // Encode the number of bytes as the first two bytes of the outgoing
@@ -488,12 +488,11 @@ uint32_t app_timer_create (app_timer_id_t const *      p_timer_id,
 
 
 
-void serialization_timer_cb (int a, int b, int c, void* timer_id) {
+void serialization_timer_cb (uint32_t a, uint32_t b) {
     UNUSED_PARAMETER(a);
     UNUSED_PARAMETER(b);
-    UNUSED_PARAMETER(c);
 
-    timer_node_t* p_node = (timer_node_t*) timer_id;
+    timer_node_t* p_node = (timer_node_t*) _stored_timer_id;
 
     p_node->p_timeout_handler(p_node->p_context);
 }
@@ -531,8 +530,9 @@ uint32_t app_timer_start (app_timer_id_t timer_id,
         p_node->p_context = p_context;
         // timer_repeating_subscribe(p_node->p_timeout_handler, &timer_id);
         // Use 0 for the prescaler
-        tock_timer_t* timer = (tock_timer_t*)malloc(sizeof(tock_timer_t));
-        timer_every(APP_TIMER_MS(timeout_ticks, 0), serialization_timer_cb, timer_id, timer);
+        alarm_repeating_t* timer = (alarm_repeating_t*)malloc(sizeof(alarm_repeating_t));
+        _stored_timer_id = timer_id;
+        libtock_alarm_repeating_every(APP_TIMER_MS(timeout_ticks, 0), serialization_timer_cb, timer);
     } else {
         // timer_oneshot_subscribe(p_node->p_timeout_handler, &timer_id);
     }
