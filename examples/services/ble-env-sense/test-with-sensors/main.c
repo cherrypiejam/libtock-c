@@ -35,7 +35,8 @@ static void ipc_callback(__attribute__ ((unused)) int   pid,
 
 
 static void do_sensing_cb(__attribute__ ((unused)) uint32_t now,
-                          __attribute__ ((unused)) uint32_t scheduled) {
+                          __attribute__ ((unused)) uint32_t scheduled,
+                          __attribute__ ((unused)) void*    opaque) {
 
   printf("[BLE ESS Test] Sampling Sensors\n");
 
@@ -80,7 +81,7 @@ static void do_sensing_cb(__attribute__ ((unused)) uint32_t now,
   printf("  temp:  %i\n", temp);
   printf("  humi:  %i\n", humi);
 
-  libtock_alarm_in_ms(3000, do_sensing_cb, &_alarm);
+  libtock_alarm_in_ms(3000, do_sensing_cb,  NULL, &_alarm);
 }
 
 
@@ -100,7 +101,7 @@ int main(void) {
   ipc_register_client_callback(_svc_num, ipc_callback, update);
   ipc_share(_svc_num, buf, 64);
 
-  libtock_alarm_in_ms(1000, do_sensing_cb, &_alarm);
+  libtock_alarm_in_ms(1000, do_sensing_cb, NULL,  &_alarm);
 
   return 0;
 }
