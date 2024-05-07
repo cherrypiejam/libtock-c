@@ -127,13 +127,14 @@ struct alarm_cb_data {
 static struct alarm_cb_data data = { .debouncing = true };
 
 static void debounce_cb(__attribute__ ((unused)) uint32_t now,
-                        __attribute__ ((unused)) uint32_t scheduled) {
+                        __attribute__ ((unused)) uint32_t scheduled,
+                        __attribute__ ((unused)) void*    opaque) {
   data.debouncing = false;
 }
 
 static void start_debounce(void) {
   data.debouncing = true;
-  libtock_alarm_in_ms(300, debounce_cb, &debounce_alarm);
+  libtock_alarm_in_ms(300, debounce_cb, NULL, &debounce_alarm);
 }
 
 static void button_callback(
