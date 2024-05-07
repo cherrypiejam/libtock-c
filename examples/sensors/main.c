@@ -10,7 +10,7 @@
 #include <libtock-sync/services/alarm.h>
 #include <libtock/tock.h>
 
-static alarm_t alarm;
+static libtock_alarm_t alarm;
 static bool light          = false;
 static bool temperature    = false;
 static bool humidity       = false;
