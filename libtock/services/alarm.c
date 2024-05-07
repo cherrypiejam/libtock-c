@@ -148,7 +148,8 @@ static void alarm_repeating_cb( uint32_t now, __attribute__ ((unused)) uint32_t 
 }
 
 
-void libtock_alarm_repeating_every(uint32_t ms, libtock_alarm_callback cb, void* opaque, libtock_alarm_repeating_t* repeating) {
+void libtock_alarm_repeating_every(uint32_t ms, libtock_alarm_callback cb, void* opaque,
+                                   libtock_alarm_repeating_t* repeating) {
   uint32_t frequency;
   libtock_alarm_command_get_frequency(&frequency);
   uint32_t interval = (ms / 1000) * frequency + (ms % 1000) * (frequency / 1000);
