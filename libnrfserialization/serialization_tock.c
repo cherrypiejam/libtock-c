@@ -58,7 +58,7 @@ static bool _need_wakeup = false;
 static bool _queued_packets = false;
 // Timer to detect when we fail to get a response message after sending a
 // command.
-static alarm_t* _timeout_timer = NULL;
+static libtock_alarm_t* _timeout_timer = NULL;
 // yield() variable.
 static bool nrf_serialization_done = false;
 
@@ -353,7 +353,7 @@ uint32_t ser_phy_tx_pkt_send (const uint8_t* p_buffer, uint16_t num_of_bytes) {
     if (tx_len == 0) {
         // We need to set a timer in case we never get the response packet.
         if (ser_sd_transport_is_busy()) {
-            _timeout_timer = (alarm_t*)malloc(sizeof(alarm_t));
+            _timeout_timer = (libtock_alarm_t*)malloc(sizeof(libtock_alarm_t));
             libtock_alarm_in_ms(100, timeout_timer_cb, NULL, _timeout_timer);
         }
 
@@ -529,7 +529,7 @@ uint32_t app_timer_start (app_timer_id_t timer_id,
         p_node->p_context = p_context;
         // timer_repeating_subscribe(p_node->p_timeout_handler, &timer_id);
         // Use 0 for the prescaler
-        alarm_repeating_t* timer = (alarm_repeating_t*)malloc(sizeof(alarm_repeating_t));
+        libtock_alarm_repeating_t* timer = (libtock_alarm_repeating_t*)malloc(sizeof(libtock_alarm_repeating_t));
         libtock_alarm_repeating_every(APP_TIMER_MS(timeout_ticks, 0), serialization_timer_cb, timer_id, timer);
     } else {
         // timer_oneshot_subscribe(p_node->p_timeout_handler, &timer_id);
