@@ -24,7 +24,7 @@ typedef struct {
 } sensor_update_t;
 
 bool _ipc_done = false;
-alarm_t _alarm;
+libtock_alarm_t _alarm;
 
 static void ipc_callback(__attribute__ ((unused)) int   pid,
                          __attribute__ ((unused)) int   len,
