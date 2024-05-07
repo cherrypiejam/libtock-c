@@ -24,9 +24,11 @@ extern "C" {
 
 // Function signature for alarm callback.
 //
-// - `arg1` (`now`): The current time when this callback was enqueued by the kernel.
-// - `arg2` (`scheduled`): The time (reference + dt) that this alarm was originally scheduled
-//    to fire at
+// - `arg1` (`now`): The current time when this callback was enqueued by the
+//   kernel.
+// - `arg2` (`scheduled`): The time (reference + dt) that this alarm was
+//   originally scheduled to fire at.
+// - `arg3` (`opaque`): An arbitrary user pointer passed back to the callback.
 typedef void (*libtock_alarm_callback)(uint32_t, uint32_t, void*);
 
 /** \brief Opaque handle to a single-shot alarm.
@@ -95,7 +97,7 @@ int libtock_alarm_gettimeasticks(struct timeval *tv, void *tzvp);
  *
  * \param ms the number of milliseconds to fire the alarm after.
  * \param callback a callback to be invoked when the alarm expires.
- * \param userdata passed to the callback.
+ * \param opaque pointer passed to the callback.
  * \param A handle to the alarm that was created.
  * \return An error code. Either RETURNCODE_SUCCESS or RETURNCODE_FAIL.
  */
@@ -108,7 +110,7 @@ int libtock_alarm_in_ms(uint32_t ms, libtock_alarm_callback cb, void* opaque, al
  *
  * \param ms the interval to fire the alarm at in milliseconds.
  * \param callback a callback to be invoked when the alarm expires.
- * \param userdata passed to the callback.
+ * \param opaque pointer passed to the callback.
  * \param a pointer to a new alarm_repeating_t to be used by the implementation to
  *        keep track of the alarm.
  */
