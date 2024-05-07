@@ -29,7 +29,8 @@ struct alarm_cb_data {
 static struct alarm_cb_data data = { .fired = false, .callback_count = 0 };
 
 static void alarm_cb(__attribute__ ((unused)) uint32_t now,
-                     __attribute__ ((unused)) uint32_t scheduled) {
+                     __attribute__ ((unused)) uint32_t scheduled,
+                     __attribute__ ((unused)) void*    opaque) {
   data.callback_count = data.callback_count + 1;
   data.fired = true;
 }
@@ -44,7 +45,7 @@ static void gpio_output(void) {
   // Start repeating alarm
   data.fired = false;
   alarm_repeating_t alarm_repeating;
-  libtock_alarm_repeating_every(1000, alarm_cb, &alarm_repeating);
+  libtock_alarm_repeating_every(1000, alarm_cb, NULL, &alarm_repeating);
 
   while (1) {
     yield_for(&data.fired);
@@ -65,7 +66,7 @@ static void gpio_input(void) {
   libtock_gpio_enable_input(0, libtock_pull_down);
   alarm_repeating_t alarm_repeating;
   data.fired = false;
-  libtock_alarm_repeating_every(500, alarm_cb, &alarm_repeating);
+  libtock_alarm_repeating_every(500, alarm_cb, NULL, &alarm_repeating);
 
   while (1) {
     // print pin value
