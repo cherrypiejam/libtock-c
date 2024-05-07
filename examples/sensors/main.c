@@ -21,7 +21,8 @@ static bool ninedof_gyro   = false;
 static bool proximity      = false;
 static bool sound_pressure = false;
 static void alarm_cb(__attribute__ ((unused)) uint32_t now,
-                     __attribute__ ((unused)) uint32_t scheduled) {
+                     __attribute__ ((unused)) uint32_t scheduled,
+                     __attribute__ ((unused)) void*    opaque) {
   int lite = 0;
   int temp = 0;
   int humi = 0;
@@ -53,7 +54,7 @@ static void alarm_cb(__attribute__ ((unused)) uint32_t now,
   /* *INDENT-ON* */
 
   printf("\n");
-  libtock_alarm_in_ms(1000, alarm_cb, &alarm);
+  libtock_alarm_in_ms(1000, alarm_cb, NULL, &alarm);
 }
 
 int main(void) {
@@ -92,7 +93,7 @@ int main(void) {
   }
 
   // Setup periodic alarm to sample the sensors.
-  libtock_alarm_in_ms(1000, alarm_cb, &alarm);
+  libtock_alarm_in_ms(1000, alarm_cb, NULL, &alarm);
 
   while (1) {
     yield();
