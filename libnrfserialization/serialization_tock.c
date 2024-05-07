@@ -18,6 +18,17 @@
 #include "ble_serialization.h"
 #include "ser_sd_transport.h"
 
+static void serialization_timer_cb0 (uint32_t a, uint32_t b);
+static void serialization_timer_cb1 (uint32_t a, uint32_t b);
+static void serialization_timer_cb2 (uint32_t a, uint32_t b);
+static void serialization_timer_cb3 (uint32_t a, uint32_t b);
+static void serialization_timer_cb4 (uint32_t a, uint32_t b);
+static void serialization_timer_cb5 (uint32_t a, uint32_t b);
+static void serialization_timer_cb6 (uint32_t a, uint32_t b);
+static void serialization_timer_cb7 (uint32_t a, uint32_t b);
+static void serialization_timer_cb8 (uint32_t a, uint32_t b);
+static void serialization_timer_cb9 (uint32_t a, uint32_t b);
+
 // Circular queue for event packets. Event packets are generated asynchronously
 // from the nRF (e.g. advertisement discovery or read requests).
 #define RX_BUFFER_SIZE 5
@@ -62,7 +73,20 @@ static alarm_t* _timeout_timer = NULL;
 // yield() variable.
 static bool nrf_serialization_done = false;
 // Save timer object for repeating alarms.
-static app_timer_id_t _stored_timer_id;
+static app_timer_id_t stored_timer[10] = {NULL};
+// List of timer callbacks.
+static void (*serialization_timer_cbs[10])(uint32_t,uint32_t) = {
+    serialization_timer_cb0,
+    serialization_timer_cb1,
+    serialization_timer_cb2,
+    serialization_timer_cb3,
+    serialization_timer_cb4,
+    serialization_timer_cb5,
+    serialization_timer_cb6,
+    serialization_timer_cb7,
+    serialization_timer_cb8,
+    serialization_timer_cb9,
+};
 
 /*******************************************************************************
  * Prototypes
@@ -72,7 +96,7 @@ void timeout_timer_cb (uint32_t a, uint32_t b);
 void ble_serialization_callback (int callback_type, int rx_len, int c, void* other);
 
 uint32_t sd_app_evt_wait (void);
-void serialization_timer_cb (uint32_t a, uint32_t b);
+
 
 uint32_t ser_app_hal_hw_init (void);
 void ser_app_hal_delay (uint32_t ms);
@@ -488,14 +512,25 @@ uint32_t app_timer_create (app_timer_id_t const *      p_timer_id,
 
 
 
-void serialization_timer_cb (uint32_t a, uint32_t b) {
+static void serialization_timer_cb (uint32_t a, uint32_t b, int id) {
     UNUSED_PARAMETER(a);
     UNUSED_PARAMETER(b);
 
-    timer_node_t* p_node = (timer_node_t*) _stored_timer_id;
+    timer_node_t* p_node = (timer_node_t*) stored_timer[id];
 
     p_node->p_timeout_handler(p_node->p_context);
 }
+
+static void serialization_timer_cb0(uint32_t a, uint32_t b) { serialization_timer_cb(a, b, 0); }
+static void serialization_timer_cb1(uint32_t a, uint32_t b) { serialization_timer_cb(a, b, 1); }
+static void serialization_timer_cb2(uint32_t a, uint32_t b) { serialization_timer_cb(a, b, 2); }
+static void serialization_timer_cb3(uint32_t a, uint32_t b) { serialization_timer_cb(a, b, 3); }
+static void serialization_timer_cb4(uint32_t a, uint32_t b) { serialization_timer_cb(a, b, 4); }
+static void serialization_timer_cb5(uint32_t a, uint32_t b) { serialization_timer_cb(a, b, 5); }
+static void serialization_timer_cb6(uint32_t a, uint32_t b) { serialization_timer_cb(a, b, 6); }
+static void serialization_timer_cb7(uint32_t a, uint32_t b) { serialization_timer_cb(a, b, 7); }
+static void serialization_timer_cb8(uint32_t a, uint32_t b) { serialization_timer_cb(a, b, 8); }
+static void serialization_timer_cb9(uint32_t a, uint32_t b) { serialization_timer_cb(a, b, 9); }
 
 /**@brief Function for starting a timer.
  *
@@ -527,12 +562,21 @@ uint32_t app_timer_start (app_timer_id_t timer_id,
     timer_node_t* p_node = (timer_node_t*) timer_id;
 
     if (p_node->mode == APP_TIMER_MODE_REPEATED) {
+
+        // Store the app timer so we can retrieve it in the callback.
+        int index = 0;
+        for (int i=0; i<10; i++) {
+            if (stored_timer[i] == NULL) {
+                stored_timer[i] = timer_id;
+                break;
+            }
+        }
+
         p_node->p_context = p_context;
         // timer_repeating_subscribe(p_node->p_timeout_handler, &timer_id);
         // Use 0 for the prescaler
         alarm_repeating_t* timer = (alarm_repeating_t*)malloc(sizeof(alarm_repeating_t));
-        _stored_timer_id = timer_id;
-        libtock_alarm_repeating_every(APP_TIMER_MS(timeout_ticks, 0), serialization_timer_cb, timer);
+        libtock_alarm_repeating_every(APP_TIMER_MS(timeout_ticks, 0), serialization_timer_cbs[index], timer);
     } else {
         // timer_oneshot_subscribe(p_node->p_timeout_handler, &timer_id);
     }
