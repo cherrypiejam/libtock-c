@@ -22,7 +22,8 @@ static void getnstr_cb(returncode_t result __attribute__ ((unused)),
 }
 
 static void alarm_cb(__attribute__ ((unused)) uint32_t now,
-                     __attribute__ ((unused)) uint32_t scheduled) {
+                     __attribute__ ((unused)) uint32_t scheduled,
+                     __attribute__ ((unused)) void*    opaque) {
   libtock_console_abort_read();
 }
 
@@ -34,7 +35,7 @@ int main(void) {
   }
 
   // Generate a timeout to abort the receive call.
-  libtock_alarm_in_ms(5000, alarm_cb, &t);
+  libtock_alarm_in_ms(5000, alarm_cb, NULL, &t);
 
   while (1) {
     yield();
