@@ -15,7 +15,7 @@
 u8g2_t u8g2;
 mui_t ui;
 
-alarm_t debounce_alarm;
+libtock_alarm_t debounce_alarm;
 
 bool action = false;
 
