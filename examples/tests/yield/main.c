@@ -17,7 +17,7 @@ static void alarm_cb(__attribute__ ((unused)) uint32_t now,
 
 int main(void) {
 
-  alarm_t alarm;
+  libtock_alarm_t alarm;
   while (1) {
     data.fired = false;
     libtock_alarm_in_ms(1500, alarm_cb, NULL, &alarm);
