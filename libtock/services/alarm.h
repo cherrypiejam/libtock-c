@@ -43,7 +43,7 @@ typedef struct alarm {
   void* ud;
   struct alarm* next;
   struct alarm* prev;
-} alarm_t;
+} libtock_alarm_t;
 
 /** \brief Opaque handle to a repeating alarm.
  *
@@ -53,8 +53,8 @@ typedef struct alarm_repeating {
   uint32_t interval;
   libtock_alarm_callback cb;
   void* ud;
-  alarm_t alarm;
-} alarm_repeating_t;
+  libtock_alarm_t alarm;
+} libtock_alarm_repeating_t;
 
 
 /** \brief Create a new alarm to fire at a particular clock value.
@@ -70,7 +70,7 @@ typedef struct alarm_repeating {
  *        track of the alarm.
  * \return An error code. Either RETURNCODE_SUCCESS or RETURNCODE_FAIL.
  */
-int libtock_alarm_at(uint32_t reference, uint32_t dt, libtock_alarm_callback cb, void* opaque, alarm_t *alarm);
+int libtock_alarm_at(uint32_t reference, uint32_t dt, libtock_alarm_callback cb, void* opaque, libtock_alarm_t *alarm);
 
 /** \brief Cancels an existing alarm.
  *
@@ -78,7 +78,7 @@ int libtock_alarm_at(uint32_t reference, uint32_t dt, libtock_alarm_callback cb,
  *
  * \param alarm
  */
-void libtock_alarm_cancel(alarm_t*);
+void libtock_alarm_cancel(libtock_alarm_t*);
 
 // Use this to implement _gettimeofday yourself as libtock-c doesn't provide
 // an implementation.
@@ -101,7 +101,7 @@ int libtock_alarm_gettimeasticks(struct timeval *tv, void *tzvp);
  * \param A handle to the alarm that was created.
  * \return An error code. Either RETURNCODE_SUCCESS or RETURNCODE_FAIL.
  */
-int libtock_alarm_in_ms(uint32_t ms, libtock_alarm_callback cb, void* opaque, alarm_t* alarm);
+int libtock_alarm_in_ms(uint32_t ms, libtock_alarm_callback cb, void* opaque, libtock_alarm_t* alarm);
 
 /** \brief Create a new repeating alarm to fire every `ms` milliseconds.
  *
@@ -114,13 +114,13 @@ int libtock_alarm_in_ms(uint32_t ms, libtock_alarm_callback cb, void* opaque, al
  * \param a pointer to a new alarm_repeating_t to be used by the implementation to
  *        keep track of the alarm.
  */
-void libtock_alarm_repeating_every(uint32_t ms, libtock_alarm_callback cb, void* opaque, alarm_repeating_t* alarm_repeating);
+void libtock_alarm_repeating_every(uint32_t ms, libtock_alarm_callback cb, void* opaque, libtock_alarm_repeating_t* alarm_repeating);
 
 /** \brief Cancels an existing repeating alarm.
  *
  * \param alarm_repeating
  */
-void libtock_alarm_repeating_cancel(alarm_repeating_t* alarm_repeating);
+void libtock_alarm_repeating_cancel(libtock_alarm_repeating_t* alarm_repeating);
 
 #ifdef __cplusplus
 }

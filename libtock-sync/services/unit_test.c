@@ -84,7 +84,7 @@ struct unit_test_t {
   int pid;
 
   // alarm structure used for triggering test timeout conditions.
-  alarm_t alarm;
+  libtock_alarm_t alarm;
 
   // Result of the most recently completed test.
   unit_test_result_t result;
