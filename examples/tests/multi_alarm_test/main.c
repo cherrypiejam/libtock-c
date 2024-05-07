@@ -7,8 +7,8 @@ static int interval;
 
 typedef struct {
   int led;
-  alarm_t timer;
-  alarm_repeating_t repeating;
+  libtock_alarm_t timer;
+  libtock_alarm_repeating_t repeating;
 } timer_data;
 
 static void toggle(int led_num) {
